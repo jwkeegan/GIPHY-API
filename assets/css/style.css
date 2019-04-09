@@ -14,4 +14,13 @@
 
 .gif {
     max-height: 180px;
+    margin-bottom: 5px;
+}
+
+p {
+    margin-bottom: 5px;
+}
+
+#add-favorite {
+    margin-bottom: 5px;
 }

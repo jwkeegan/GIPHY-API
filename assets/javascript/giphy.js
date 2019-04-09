@@ -22,6 +22,9 @@ $(document).ready(function() {
     //.. and call it
     placeButtons();
 
+    // Create variable to track gif number
+    var gifNumber = 0;
+
     // when the user clicks one of the available buttons..
     $(document).on("click", "#topic-button", function() {
         
@@ -61,14 +64,21 @@ $(document).ready(function() {
                     .attr("data-live", data[i].images.original.url)
                     .attr("data-still", data[i].images.original_still.url)
                     .attr("data-state", "still")
+                    .attr("id", "gif-" + gifNumber)
                     .attr("alt", searchTerm + "-gif-" + i);
                 gif.append(gifImg);
                 
                 // make p element with rating in it and append
-                gif.append("<p>Rating: " + data[i].rating + "</p>");
+                gif.append("<p id='fav-remove-" + gifNumber + "'>Rating: " + data[i].rating + "</p>");
+
+                // make a favorite button
+                gif.append("<button id='add-favorite' data-num='" + gifNumber + "'>Favorite</button>");
 
                 // append gif to gifDiv
                 gifDiv.append(gif);
+
+                // increment gifNumber
+                gifNumber++;
             }
 
             // prepend gifDiv to DOM
@@ -99,6 +109,19 @@ $(document).ready(function() {
         }
 
     });
+
+    // when favorite button clicked
+    $(document).on("click", "#add-favorite", function() {
+        
+        // find number of associated gif
+        var favNum = $(this).attr("data-num");
+        var fav = $("#gif-" + favNum);
+
+        // append appropriate gif and rating to favorites and remove button 
+        $("#favorites").append(fav);
+        $("#favorites").append($("#fav-remove-" + favNum));
+        this.remove();
+    })
 
     // When user presses the submit button
     $(document).on("click", "#new-character", function() {
